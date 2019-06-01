@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Online White Board</title>
+  <!-- favicon -->
+  <link rel="apple-touch-icon" sizes="57x57" href="./favicon/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="./favicon/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="./favicon/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="./favicon/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="./favicon/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="./favicon/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="./favicon/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="./favicon/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="./favicon/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="./favicon/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="./favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="./favicon/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="./favicon/favicon-16x16.png">
+  <link rel="manifest" href="./favicon/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="./favicon/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  <!-- stylesheet -->
+  <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+  <link rel="stylesheet" href="./style/general.css">
+  <link rel="stylesheet" href="./style/styles.css">
+  <link rel="stylesheet" href="./style/modal.css">
+  <link rel="stylesheet" href="./style/canvas.css">
+  <link rel="stylesheet" href="./style/tooltip.css">
+  <link rel="stylesheet" href="./style/chatroom.css">
+  <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.3/jspdf.min.js"></script> -->
+  <script src="https://unpkg.com/jspdf@latest/dist/jspdf.min.js"></script>
+</head>
+<body>
+    <ul class="nav">
+      <!-- 颜色选择 -->
+      <li class="dropdown tooltip" data-tooltip-title="颜色">
+        <a href="#" id="id-color" class="dropbtn gray2black-hover">
+          <i id="id-color-icon" class="fas fa-paint-brush fa-2x"></i>
+        </a>
+        <div class="dropdown-content">
+          <p class="dropdown-content-item">
+            <label for="">颜色：</label>
+            <input type="radio" class="black" name="color" value="black" checked>
+            <input type="radio" class="red" name="color" value="red">
+            <input type="radio" class="yellow" name="color" value="yellow">
+          </p>
+          <p class="dropdown-content-item">
+            <input id="id-color-picker" type="color" value= '#ff0000'>
+          </p>
+        </div>
+      </li>
+      <!-- 画笔 -->
+      <li class="dropdown tooltip" data-tooltip-title="画笔">
+        <a href="#"  id="id-brush" class="dropbtn gray2black-hover">
+          <i class="fas fa-pencil-alt fa-2x"></i>
+        </a>
+        <div class="dropdown-content">
+            <p class="dropdown-content-item">
+              <label>画笔粗细：</label>
+              <input type="range" min="1" max="10" value="1" name="line-width"></input>
+              <span id="line-width">10</span>
+            </p>
+        </div>
+      </li>
+    <!-- 文字 -->
+      <li class="dropdown tooltip" data-tooltip-title="文字">
+        <a href="#"  id="id-text" class="dropbtn gray2black-hover">
+          <i class="fas fa-font fa-2x"></i>
+        </a>
+        <div class="dropdown-content"  for="id-text">
+            <p class="dropdown-content-item">
+              <label>字体：</label>
+              <select name="font-family">
+                <option value="value1" selected>Value 1</option> 
+                <option value="value2">Value 2</option>
+                <option value="value3">Value 3</option>
+              </select>
+            </p>
+            <p class="dropdown-content-item">
+              <span>没有你需要的字体？</span><br>
+              <label for="id-font-name">字体名称：</label>
+              <input type="text" id="id-font-name" required><br>
+              <label for="id-font-url">字体在线地址：</label>
+              <input type="text" id="id-font-url" placeholder="some url" required>
+              <input type="submit" id="id-font-submit" value="提交">
+            </p>
+            <p class="dropdown-content-item">
+                <label>字体大小：</label>
+                <input type="range" min="10" max="60" value="1" step="2" name="font-size"></input>
+                <span id="id-font-size">1</span>
+            </p>
+        </div>
+      </li>
+      <!-- 橡皮擦 -->
+      <li class="dropdown tooltip" data-tooltip-title="橡皮擦">
+        <a href="#"  id="id-eraser" class="dropbtn gray2black-hover">
+          <i class="fas fa-eraser fa-2x"></i>
+        </a>
+        <div class="dropdown-content">
+            <p class="dropdown-content-item">
+              <label>橡皮擦大小：</label>
+              <input type="range" min="10" max="60" value="1" step="2" name="eraser-size"></input>
+              <span id="eraser-size">1</span>
+            </p>
+        </div>
+      </li>
+      <!-- 清空画布 -->
+      <li class="dropdown tooltip" data-tooltip-title="清空画布">
+        <a href="#"  id="id-clear" class="dropbtn  gray2black-hover">
+          <i class="fas fa-trash-alt fa-2x"></i>
+        </a>
+      </li>
+      <!-- 撤销 -->
+      <li class="dropdown tooltip" data-tooltip-title="撤销">
+        <a href="#"  id="id-undo" class="dropbtn  gray2black-hover">
+          <i class="fas fa-reply fa-2x"></i>
+        </a>
+      </li>
+      <!-- 恢复 -->
+      <li class="dropdown tooltip" data-tooltip-title="恢复">
+        <a href="#"  id="id-recover" class="dropbtn  gray2black-hover">
+          <i class="fas fa-share fa-2x"></i>
+        </a>
+      </li>
+      <!-- 邀请其他人 -->
+      <li class="dropdown modal tooltip" data-tooltip-title="邀请其他人">
+        <a href="#"  id="id-invite-btn" class="dropbtn  gray2black-hover">
+          <i class="fas fa-user-plus  fa-2x"></i>
+        </a>
+        <div class="modal-overlay">
+          <div class="modal-wrap">
+            <span id="id-close-modal" class="close">
+              <i class="fas fa-times"></i>
+            </span>
+            <div class="modal-wrap-content">
+              <p>
+                <span>通过链接复制：</span><br>
+                <span><input id="id-copy-input" type="text" value="some url" disabled>
+                <button id="id-copy-link" class="cur-p gray2black-hover">复制链接</button></span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </li>
+      <!-- 另存为 -->
+      <li class="dropdown tooltip" data-tooltip-title="另存为">
+        <a href="#"  id="id-save" class="dropbtn gray2black-hover">
+          <i class="fas fa-save fa-2x"></i>
+        </a>
+        <div class="dropdown-content">
+            <p class="dropdown-content-item">
+              <button id="id-save-pdf">保存为PDF</button>
+            </p>
+            <p class="dropdown-content-item">
+              <button id="id-save-img">保存为图片</button>
+            </p>
+        </div>
+      </li>
+      <!-- 放大 -->
+      <li class="dropdown tooltip" data-tooltip-title="放大">
+        <a href="#"  id="id-scale" class="dropbtn gray2black-hover">
+          <i class="fas fa-plus fa-2x"></i>
+        </a>
+      </li>
+      <!-- 缩小 -->
+      <li class="dropdown tooltip" data-tooltip-title="缩小">
+        <a href="#"  id="id-reduce" class="dropbtn gray2black-hover">
+          <i class="fas fa-minus fa-2x"></i>
+        </a>
+      </li>
+    </ul>
+  <textarea id="id-textarea" autofocus class="hide absolute"
+  placeholder="请输入"></textarea>
+  <!--  -->
+  <!-- 聊天模块 -->
+  <div class="chat hide">
+    <!-- 用来显示/隐藏聊天窗口的checkbox -->
+    <input type="checkbox" id="id-chat-toggle" class="hide">
+    <!-- 聊天窗口 -->
+    <div class="chat-main fadeInup">
+      <!-- 头部导航栏 -->
+      <div class="chat-header">
+        <i class="fas fa-check fa-lg after-editing gray2black-hover"></i>
+        <i class="fas fa-edit fa-lg before-editing gray2black-hover"></i>
+        <div class="input-underscroe">
+          <input type="text" class="chat-username" readonly>
+        </div>
+        <i class="fas fa-phone fa-lg before-editing gray2black-hover" id="id-chat-voice"></i>
+      </div>
+      <!-- 对话消息历史 -->
+      <ul class="chat-history">
+        <!-- 自己的消息的模版 -->
+        <script id="self-msg-template" type="text/html">
+          <li class="clearfix">
+            <div class="mb-10 pd-2-4 ta-r">
+              <time class="pd-0-6 op-05">{{time}}</time>
+              <span>{{userName}}</span>
+              <i class="fa fa-circle fa-xs"></i>
+            </div>
+            <div class="chat-msg-content self-msg text">
+              {{msg}}
+            </div>
+          </li>
+        </script>
+        <!-- 接受其他用户的消息的模版 -->
+        <script id="other-msg-template" type="text/html">
+          <li class="clearfix">
+            <div class="mb-10 pd-2-4 ta-l">
+              <i class="fa fa-circle fa-xs"></i>
+              <span>{{userName}}</span>
+              <time class="pd-0-6 op-05">{{time}}</time>
+            </div>
+            <div class="chat-msg-content other-msg text">
+              {{msg}}
+            </div>
+          </li>
+        </script>
+        <!-- 改变用户名通知的模版 -->
+        <script id="change-name-template" type="text/html">
+          <li class="clearfix">
+            <time class='center op-05'>{{time}}</time>
+            <p class='ta-c mt-0'>{{msg}}</p>
+          </li>
+        </script>
+      </ul>
+      <!-- 回复消息区域 -->
+      <div class="d-f pd-10">
+        <textarea class="chat-input" cols="25" rows="2" placeholder="请输入："></textarea>
+        <button class="cur-p gray2black-hover" id="id-submit">发送</button>
+      </div>
+      <!-- 语音聊天 -->
+      <div class="chat-voice-main fadeInup">
+        <P>
+          讲话中
+        </P>
+        <div class="chat-voice-close-container">
+          <i class="fas fa-phone fa-3x" id="chat-voice-close"></i>
+        </div>
+      </div>
+    </div>
+    <!-- 显示/隐藏聊天窗口 -->
+    <label for="id-chat-toggle" class="fl-r">
+      <i class="far fa-window-close fa-3x chat-opened hide gray2black-hover"></i>
+      <i class="far fa-comment-alt fa-3x chat-closed gray2black-hover"></i>
+    </label>
+  </div>
+</body>
+<script src="./wsClient.js"></script>
+<script src="./scripts/board.js"></script>
+<script src="./scripts/tools/pen.js"></script>
+<script src="./scripts/tools/textarea.js"></script>
+<script src="./scripts/tools/eraser.js"></script>
+<script src="./scripts/tools/colorManager.js"></script>
+<script src="./scripts/drawhistory.js"></script>
+<script src="./scripts/chat.js"></script>
+<script src="./scripts/utilitys.js"></script>
+<script>
+var _main = function() {
+  var board = new Board()
+  // if(window.location.pathname.slice(1).length > 0) {
+  //   wsClient.initSocket(window.location.pathname.slice(1))
+  // }
+}
+_main()
+</script>
+</html>
